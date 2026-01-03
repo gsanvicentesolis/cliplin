@@ -1,0 +1,45 @@
+ts4: "1.0"
+id: "cliplin-cli-stack"
+title: "Cliplin CLI Technical Stack"
+summary: "Technical stack and package configuration for the Cliplin CLI tool, installable via uv."
+
+rules:
+  - "CLI must be implemented in Python 3.10+ with type hints"
+  - "Package management must use `uv` (Astral UV) as the primary installer and dependency manager"
+  - "Project structure must follow Python packaging standards with `pyproject.toml` for uv compatibility"
+  - "CLI entry point must be accessible via `cliplin` command after installation"
+  - "All commands must use `typer` or `click` for CLI argument parsing and subcommands"
+  - "CLI must be executable as a module: `python -m cliplin` or standalone: `cliplin`"
+  - "CLI must validate Python version compatibility (>=3.10) before installation"
+  - |
+    Package dependencies must include:
+    - Python >= 3.10
+    - uv (Astral UV) >= 0.1.0
+    - typer >= 0.9.0 (or click >= 8.0.0)
+    - pyyaml >= 6.0
+    - rich >= 13.0.0 (for terminal output formatting)
+    - pydantic >= 2.0.0 (for configuration validation)
+  - |
+    Project structure must include:
+    - src/cliplin/__init__.py (main package)
+    - src/cliplin/cli.py (CLI entry point and command registration)
+    - pyproject.toml (package configuration for uv with PEP 621 format)
+    - README.md (project documentation)
+  - |
+    Package installation methods must support:
+    - uv pip install: via `uv pip install cliplin` (requires uv in PATH)
+    - uv tool install: via `uv tool install cliplin` or `uvx cliplin` for one-time execution
+    - development install: via `uv pip install -e .` or `uv sync` if using uv project structure
+  - |
+    pyproject.toml must:
+    - Use PEP 621 standard for package metadata and dependencies
+    - Define entry points in `[project.scripts]` with `cliplin = cliplin.cli:main`
+    - Specify dependencies in `[project.dependencies]`
+    - Specify Python version requirement as `requires-python = \">=3.10\"`
+    - Include build system `[build-system]` with `requires = [\"hatchling\"]` or compatible
+
+code_refs:
+  - "pyproject.toml"
+  - "src/cliplin/__init__.py"
+  - "src/cliplin/cli.py"
+
