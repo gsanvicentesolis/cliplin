@@ -23,36 +23,6 @@ AI_TOOL_CONFIGS: Dict[str, Dict[str, str]] = {
 }
 
 
-def create_config_file(target_dir: Path, ai_tool: Optional[str] = None) -> None:
-    """Create the Cliplin configuration file."""
-    config_path = target_dir / ".cliplin" / "config.yaml"
-    config_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    config_content = """# Cliplin Project Configuration
-
-version: "1.0"
-project_name: ""
-
-# ChromaDB Configuration
-chromadb:
-  path: ".cliplin/data/context/chroma.sqlite3"
-  collections:
-    - business-and-architecture
-    - features
-    - tech-specs
-    - uisi
-
-# AI Tool Configuration
-"""
-    if ai_tool:
-        config_content += f"ai_tool: {ai_tool}  # Set when using cliplin init --ai\n"
-    else:
-        config_content += "ai_tool: null  # Set to 'cursor' or 'claude-desktop' when using cliplin init --ai\n"
-    
-    config_path.write_text(config_content)
-    console.print(f"  [green]✓[/green] Created .cliplin/config.yaml")
-
-
 def create_readme_file(target_dir: Path) -> None:
     """Create a basic README file for the Cliplin project."""
     readme_path = target_dir / "README.md"
