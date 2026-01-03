@@ -37,9 +37,48 @@ rules:
     - Specify dependencies in `[project.dependencies]`
     - Specify Python version requirement as `requires-python = \">=3.10\"`
     - Include build system `[build-system]` with `requires = [\"hatchling\"]` or compatible
+  - |
+    CLI command organization must follow:
+    - Each command in separate module under `src/cliplin/commands/`
+    - Commands registered in `src/cliplin/cli.py` using `app.command(name="command")(command_function)`
+    - Utility functions in `src/cliplin/utils/` for shared functionality
+    - Commands should validate prerequisites early and provide clear error messages
+  - |
+    Rich library usage rules:
+    - Never concatenate Rich objects (Panel, Table) with strings using `+` operator
+    - Use separate `console.print()` calls for Rich objects
+    - Build text content as strings first, then pass to Rich constructors
+    - Example: `console.print()` then `console.print(Panel.fit(text))` not `console.print("\n" + Panel.fit(text))`
+  - |
+    Template directory discovery:
+    - Search in order: package_dir/template, project_root/template, cwd/template, ~/.cliplin/template
+    - Template directory must contain required structure for project initialization
+    - Template files are copied and adjusted based on AI tool selection
+  - |
+    ChromaDB integration patterns:
+    - Use `chromadb.PersistentClient` with path to `.cliplin/data/context/`
+    - Initialize collections using `get_or_create_collection()` to avoid errors
+    - Use file path (relative to project root) as document ID
+    - Include metadata: file_path, type, collection for all indexed documents
+    - Check for existing documents before adding to avoid duplicates
+  - |
+    Development and testing:
+    - Use `uv pip install -e .` for development mode installation
+    - Activate virtual environment before testing: `source .venv/bin/activate`
+    - Reinstall after code changes: `uv pip install -e . --force-reinstall`
+    - Test in isolated directories to avoid affecting main project
+  - |
+    Error handling:
+    - Validate Python version at CLI entry point (main callback)
+    - Use `typer.Exit(code=1)` for error conditions
+    - Use Rich console for formatted error messages
+    - Provide clear, actionable error messages to users
 
 code_refs:
   - "pyproject.toml"
   - "src/cliplin/__init__.py"
   - "src/cliplin/cli.py"
+  - "src/cliplin/commands/"
+  - "src/cliplin/utils/"
+  - "docs/adrs/001-cli-implementation-patterns.md"
 

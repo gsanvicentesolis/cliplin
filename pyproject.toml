@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cliplin"
+version = "0.1.0"
+description = "CLI tool for initializing and managing Cliplin projects with AI-assisted development"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Cliplin Team"}
+]
+keywords = ["cliplin", "cli", "ai", "development", "specifications"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "typer>=0.9.0",
+    "pyyaml>=6.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "chromadb>=0.4.0",
+]
+
+[project.scripts]
+cliplin = "cliplin.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/cliplin/cliplin-cli"
+Documentation = "https://github.com/cliplin/cliplin-cli#readme"
+Repository = "https://github.com/cliplin/cliplin-cli"
+
+[tool.hatchling.build.targets.wheel]
+packages = ["src/cliplin"]
+
