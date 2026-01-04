@@ -167,7 +167,7 @@ Feature: Cliplin CLI Tool
     Given I have the Cliplin CLI tool installed
     When I run `cliplin --help`
     Then the CLI should display usage information
-    And the CLI should list all available commands (init, validate, reindex, etc.)
+    And the CLI should list all available commands (init, validate, reindex, feature apply, etc.)
     And the CLI should show command options and arguments
     And the CLI should display examples of command usage
     And the CLI should show the `reindex` command with its options:
@@ -177,6 +177,9 @@ Feature: Cliplin CLI Tool
       | --dry-run | Review changes without reindexing |
       | --verbose | Display detailed output |
       | --interactive | Prompt for confirmation before reindexing |
+    And the CLI should show the `feature apply` command with its description:
+      | Command | Description |
+      | feature apply <feature_filepath> | Generate an implementation prompt for a feature file |
 
   Scenario: Display version information
     Given I have the Cliplin CLI tool installed
@@ -362,4 +365,45 @@ Feature: Cliplin CLI Tool
     And if any collection is missing, the CLI should create it before reindexing
     And the CLI should use the correct collection for each file type
     And the CLI should display an error if it cannot access or create a collection
+
+  Scenario: Generate implementation prompt for a feature file
+    Given I have initialized a Cliplin project using `cliplin init --ai cursor`
+    And the ChromaDB database exists at `.cliplin/data/context/chroma.sqlite3`
+    And there is a feature file `docs/features/my-feature.feature` in the project
+    When I run `cliplin feature apply docs/features/my-feature.feature`
+    Then the CLI should validate that the feature file exists
+    And the CLI should generate a structured implementation prompt
+    And the CLI should output the prompt to stdout
+    And the CLI should exit with a zero status code
+
+  Scenario: Handle feature apply when feature file does not exist
+    Given I have initialized a Cliplin project using `cliplin init --ai cursor`
+    And the ChromaDB database exists at `.cliplin/data/context/chroma.sqlite3`
+    When I run `cliplin feature apply docs/features/non-existent.feature`
+    Then the CLI should validate that the feature file exists
+    And the CLI should display an error message indicating that the feature file does not exist
+    And the CLI should exit with a non-zero status code
+    And no prompt should be generated
+
+  Scenario: Handle feature apply when ChromaDB is not initialized
+    Given I have initialized a Cliplin project using `cliplin init --ai cursor`
+    And the ChromaDB database does not exist at `.cliplin/data/context/chroma.sqlite3`
+    And there is a feature file `docs/features/my-feature.feature` in the project
+    When I run `cliplin feature apply docs/features/my-feature.feature`
+    Then the CLI should detect that ChromaDB is not initialized
+    And the CLI should display an error message indicating that ChromaDB must be initialized first
+    And the CLI should suggest running `cliplin init` to initialize the project
+    And the CLI should exit with a non-zero status code
+    And no prompt should be generated
+
+  Scenario: Handle feature apply when feature file is outside features directory
+    Given I have initialized a Cliplin project using `cliplin init --ai cursor`
+    And the ChromaDB database exists at `.cliplin/data/context/chroma.sqlite3`
+    And there is a file `src/main.py` in the project
+    When I run `cliplin feature apply src/main.py`
+    Then the CLI should validate that the file is in the `docs/features/` directory
+    And the CLI should display an error message indicating that the file is not a valid feature file
+    And the CLI should suggest using a file from `docs/features/` directory
+    And the CLI should exit with a non-zero status code
+    And no prompt should be generated
 

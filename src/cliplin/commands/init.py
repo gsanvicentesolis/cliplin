@@ -12,7 +12,6 @@ from cliplin.utils.chromadb import get_chromadb_client, initialize_collections
 from cliplin.utils.templates import (
     AI_TOOL_CONFIGS,
     create_ai_tool_config,
-    create_config_file,
     create_framework_adr,
     create_readme_file,
     create_ts4_format_adr,
@@ -68,7 +67,6 @@ def init_command(
         
         # Create configuration files
         console.print("\n[bold]Creating configuration files...[/bold]")
-        create_config_file(project_root, ai_tool=ai)
         create_readme_file(project_root)
         
         # Create framework context ADRs

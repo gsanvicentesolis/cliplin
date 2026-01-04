@@ -10,6 +10,7 @@ from cliplin import __version__
 from cliplin.commands.init import init_command
 from cliplin.commands.validate import validate_command
 from cliplin.commands.reindex import reindex_command
+from cliplin.commands.feature import feature_apply_command
 
 app = typer.Typer(
     name="cliplin",
@@ -81,10 +82,15 @@ def main(
         raise typer.Exit(code=1)
 
 
+# Create feature subcommand group
+feature_app = typer.Typer(name="feature", help="Feature-related commands")
+feature_app.command(name="apply")(feature_apply_command)
+
 # Register commands
 app.command(name="init")(init_command)
 app.command(name="validate")(validate_command)
 app.command(name="reindex")(reindex_command)
+app.add_typer(feature_app)
 
 
 def main() -> None:
