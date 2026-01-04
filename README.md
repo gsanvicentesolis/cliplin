@@ -96,6 +96,8 @@ Cliplin automatically creates the directory structure and configures everything 
     └── data/context/   # ChromaDB database for context
 ```
 
+**Note:** Cliplin tools (SPAs) are part of the Cliplin package installation, not your project directory.
+
 ### 2. Write Specifications
 
 **Feature File** (`docs/features/authentication.feature`):
@@ -141,7 +143,21 @@ cliplin reindex --dry-run
 
 Cliplin uses **ChromaDB** to semantically index and search all your specifications, enabling AI to access relevant context in real-time.
 
-### 4. Work with AI
+### 4. Use Tools (SPAs)
+
+Cliplin includes built-in Single Page Applications (SPAs) that you can open directly from the CLI:
+
+```bash
+# List available tools
+cliplin tool --list
+
+# Open a tool
+cliplin tool ui-intent
+```
+
+**Note:** Tools are part of the Cliplin package installation, not your project. They are provided by Cliplin and available in any project where Cliplin is installed.
+
+### 5. Work with AI
 
 With Cliplin configured, you can tell your AI assistant:
 
@@ -200,6 +216,10 @@ cliplin reindex --dry-run             # Preview
 
 # Generate implementation prompt
 cliplin feature apply docs/features/my-feature.feature
+
+# Open tools (SPAs)
+cliplin tool ui-intent          # Open a specific tool
+cliplin tool --list             # List all available tools
 ```
 
 ---

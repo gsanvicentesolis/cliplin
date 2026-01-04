@@ -1,0 +1,17 @@
+# Cliplin Tools Configuration
+# 
+# This file maps tool names to their corresponding HTML/SPA files.
+# Tools are part of the Cliplin package and are located in the cliplin/tools/ directory.
+#
+# Tools can be referenced by relative paths (from tools/ directory) or absolute paths.
+#
+# Example:
+#   tools:
+#     ui-intent: ui-intent.html
+#     another-tool: subdirectory/tool.html
+#     custom-tool: /absolute/path/to/tool.html
+
+tools:
+  # Add Cliplin tools here:
+  ui-intent: ui-intent/index.html
+

@@ -1,0 +1,18 @@
+# Tools Configuration File
+# 
+# This file maps tool names to their corresponding HTML/SPA files.
+# Tools can be referenced by relative paths (from tools/ directory) or absolute paths.
+#
+# Example:
+#   tools:
+#     ui-intent: ui-intent.html
+#     another-tool: subdirectory/tool.html
+#     custom-tool: /absolute/path/to/tool.html
+
+tools:
+  # Example tool configuration
+  # ui-intent: ui-intent.html
+  
+  # Add your tools here:
+  # tool-name: path/to/tool.html
+

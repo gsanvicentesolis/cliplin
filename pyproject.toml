@@ -29,6 +29,7 @@ dependencies = [
     "rich>=13.0.0",
     "pydantic>=2.0.0",
     "chromadb>=0.4.0",
+    "pywebview>=4.0.0",
 ]
 
 [project.scripts]
@@ -41,4 +42,7 @@ Repository = "https://github.com/cliplin/cliplin-cli"
 
 [tool.hatchling.build.targets.wheel]
 packages = ["src/cliplin"]
+include = [
+    "src/cliplin/tools/**/*",
+]
 
