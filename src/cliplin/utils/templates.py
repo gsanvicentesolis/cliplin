@@ -52,7 +52,7 @@ This project uses Cliplin for AI-assisted development driven by specifications.
 4. Run `cliplin reindex` to index your context files
 """
     
-    readme_path.write_text(readme_content)
+    readme_path.write_text(readme_content, encoding="utf-8")
     console.print(f"  [green]✓[/green] Created README.md")
 
 
@@ -161,7 +161,7 @@ Every output must be traceable back to a specification.
 - All specifications must be kept up to date and properly indexed
 """
     
-    adr_path.write_text(adr_content)
+    adr_path.write_text(adr_content, encoding="utf-8")
     console.print(f"  [green]✓[/green] Created docs/adrs/000-cliplin-framework.md")
 
 
@@ -245,7 +245,7 @@ code_refs:  # Optional
 - When creating new TS4 files, follow the structure and naming conventions described here
 """
     
-    adr_path.write_text(adr_content)
+    adr_path.write_text(adr_content, encoding="utf-8")
     console.print(f"  [green]✓[/green] Created docs/adrs/001-ts4-format.md")
 
 
@@ -411,7 +411,7 @@ annotations:
 - UI Intent focuses on intent, not visual design details
 """
     
-    adr_path.write_text(adr_content)
+    adr_path.write_text(adr_content, encoding="utf-8")
     console.print(f"  [green]✓[/green] Created docs/adrs/002-ui-intent-format.md")
 
 
@@ -434,14 +434,14 @@ def create_ai_tool_config(target_dir: Path, ai_tool: str) -> None:
     if ai_tool == "cursor" and config["config_file"]:
         context_file = target_dir / config["config_file"]
         context_content = get_cursor_context_content()
-        context_file.write_text(context_content)
+        context_file.write_text(context_content, encoding="utf-8")
         console.print(f"  [green]✓[/green] Created {config['config_file']}")
     
     # Create feature-processing.mdc for Cursor
     if ai_tool == "cursor" and config["feature_processing_file"]:
         feature_file = target_dir / config["feature_processing_file"]
         feature_content = get_cursor_feature_processing_content()
-        feature_file.write_text(feature_content)
+        feature_file.write_text(feature_content, encoding="utf-8")
         console.print(f"  [green]✓[/green] Created {config['feature_processing_file']}")
 
 
