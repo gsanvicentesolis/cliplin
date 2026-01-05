@@ -434,15 +434,31 @@ def create_ai_tool_config(target_dir: Path, ai_tool: str) -> None:
     if ai_tool == "cursor" and config["config_file"]:
         context_file = target_dir / config["config_file"]
         context_content = get_cursor_context_content()
-        context_file.write_text(context_content, encoding="utf-8")
-        console.print(f"  [green]✓[/green] Created {config['config_file']}")
+        try:
+            # Use open() directly to ensure UTF-8 encoding on Windows
+            with open(context_file, "w", encoding="utf-8", errors="strict") as f:
+                f.write(context_content)
+            console.print(f"  [green]✓[/green] Created {config['config_file']}")
+        except (UnicodeEncodeError, UnicodeDecodeError) as e:
+            # Fallback: try writing with errors='replace' to handle any encoding issues
+            with open(context_file, "w", encoding="utf-8", errors="replace") as f:
+                f.write(context_content)
+            console.print(f"  [green]✓[/green] Created {config['config_file']} (with encoding fallback)")
     
     # Create feature-processing.mdc for Cursor
     if ai_tool == "cursor" and config["feature_processing_file"]:
         feature_file = target_dir / config["feature_processing_file"]
         feature_content = get_cursor_feature_processing_content()
-        feature_file.write_text(feature_content, encoding="utf-8")
-        console.print(f"  [green]✓[/green] Created {config['feature_processing_file']}")
+        try:
+            # Use open() directly to ensure UTF-8 encoding on Windows
+            with open(feature_file, "w", encoding="utf-8", errors="strict") as f:
+                f.write(feature_content)
+            console.print(f"  [green]✓[/green] Created {config['feature_processing_file']}")
+        except (UnicodeEncodeError, UnicodeDecodeError) as e:
+            # Fallback: try writing with errors='replace' to handle any encoding issues
+            with open(feature_file, "w", encoding="utf-8", errors="replace") as f:
+                f.write(feature_content)
+            console.print(f"  [green]✓[/green] Created {config['feature_processing_file']} (with encoding fallback)")
 
 
 def create_cursor_mcp_config(target_dir: Path) -> None:

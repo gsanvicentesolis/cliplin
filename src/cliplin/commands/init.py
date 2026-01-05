@@ -1,6 +1,7 @@
 """Init command for initializing Cliplin projects."""
 
 import sys
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -17,6 +18,16 @@ from cliplin.utils.templates import (
     create_ts4_format_adr,
     create_ui_intent_format_adr,
 )
+
+# Configure console for Windows UTF-8 support
+if sys.platform == "win32":
+    # Force UTF-8 encoding on Windows
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    # Set environment variable for subprocesses
+    os.environ["PYTHONIOENCODING"] = "utf-8"
 
 console = Console()
 
@@ -114,7 +125,14 @@ def init_command(
         console.print(Panel.fit(success_text, border_style="green"))
         
     except Exception as e:
-        console.print(f"\n[bold red]Error:[/bold red] {e}")
+        # Safely format error message to avoid encoding issues
+        error_msg = str(e)
+        try:
+            console.print(f"\n[bold red]Error:[/bold red] {error_msg}")
+        except UnicodeEncodeError:
+            # Fallback if console can't handle the error message
+            error_msg_safe = error_msg.encode("ascii", errors="replace").decode("ascii")
+            console.print(f"\n[bold red]Error:[/bold red] {error_msg_safe}")
         raise typer.Exit(code=1)
 
 
