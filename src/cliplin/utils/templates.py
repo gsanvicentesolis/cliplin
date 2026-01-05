@@ -583,11 +583,11 @@ alwaysApply: true
 ### File Type to Collection Mapping
 
 The following file types should be indexed into their respective collections (see confirmation rules below):
-- `.md` files in `docs/adrs/` → `business-and-architecture` collection
-- `.ts4` files in `docs/ts4/` → `tech-specs` collection
-- `.md` files in `docs/business/` → `business-and-architecture` collection
-- `.feature` files in `docs/features/` → `features` collection
-- `.yaml` files in `docs/ui-intent/` → `uisi` collection
+- `.md` files in `docs/adrs/` -> `business-and-architecture` collection
+- `.ts4` files in `docs/ts4/` -> `tech-specs` collection
+- `.md` files in `docs/business/` -> `business-and-architecture` collection
+- `.feature` files in `docs/features/` -> `features` collection
+- `.yaml` files in `docs/ui-intent/` -> `uisi` collection
 
 ### Metadata Requirements
 
@@ -601,11 +601,11 @@ The following file types should be indexed into their respective collections (se
 When any context file is created or modified, you MUST:
 
 1. **Detect the change**: Identify when files are created or modified in the following directories:
-   - `.ts4` files in `docs/ts4/` → target collection: `tech-specs`
-   - `.md` files in `docs/adrs/` → target collection: `business-and-architecture`
-   - `.md` files in `docs/business/` → target collection: `business-and-architecture`
-   - `.feature` files in `docs/features/` → target collection: `features`
-   - `.yaml` files in `docs/ui-intent/` → target collection: `uisi`
+   - `.ts4` files in `docs/ts4/` -> target collection: `tech-specs`
+   - `.md` files in `docs/adrs/` -> target collection: `business-and-architecture`
+   - `.md` files in `docs/business/` -> target collection: `business-and-architecture`
+   - `.feature` files in `docs/features/` -> target collection: `features`
+   - `.yaml` files in `docs/ui-intent/` -> target collection: `uisi`
 
 2. **Always ask for confirmation**: Before indexing or re-indexing, you MUST ask the user:
    - "He detectado cambios en [archivo]. ¿Deseas reindexar este archivo en la colección [nombre-colección] para mantener el contexto actualizado?"
